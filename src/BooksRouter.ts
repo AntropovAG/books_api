@@ -13,10 +13,8 @@ export class BooksRouter {
     }
 
     private initializeRoutes() {
-        this._router.get('/books', this.bookController.getAllBooks.bind(this.bookController));
-        this._router.get('/books/category', this.bookController.getBooksByCategory.bind(this.bookController));
+        this._router.get('/books/category', this.bookController.getBooks.bind(this.bookController));
         this._router.post('/books', this.bookController.createBook.bind(this.bookController));
-        this._router.get('/books/:id', this.bookController.getBookById.bind(this.bookController));
         this._router.put('/books/:id', this.bookController.updateBook.bind(this.bookController));
         this._router.delete('/books/:id', this.bookController.deleteBook.bind(this.bookController));
     }

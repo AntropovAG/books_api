@@ -17,12 +17,7 @@ interface Book {
 export class BookRepository {
     constructor(@inject(TYPES.DBService) private dbService: DBService) { }
 
-    public async findAll() {
-        const booksList = await this.dbService.client.book.findMany();
-        return booksList;
-    }
-
-    public async findSome(perPage: number, page: number, categories: string[]) {
+    public async getBooks(perPage: number, page: number, categories: string[]) {
         const skip = (page - 1) * perPage;
         const booksList = await this.dbService.client.book.findMany({
             where: categories.length
@@ -173,7 +168,6 @@ export class BookRepository {
 
         const newAuthorRecords = authorRecords.filter(author => !currentAuthorIds.includes(author.id));
 
-        console.log(newAuthorRecords);
         const book = await this.dbService.client.book.update({
             where: { id },
             data: {
@@ -215,11 +209,4 @@ export class BookRepository {
         });
     }
 
-
-    public async findById(id: number) {
-        const book = await this.dbService.client.book.findFirst({
-            where: { id },
-        });
-        return book;
-    }
 }

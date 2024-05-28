@@ -6,12 +6,8 @@ import { BookRepository } from './BooksRepository';
 export class BooksService {
     constructor(@inject(TYPES.BookRepository) private bookRepository: BookRepository) {}
 
-    public async getBooks() {
-        return this.bookRepository.findAll();
-    }
-
-    public async getBooksByCategory(perPage: number, page: number, categories: string[]) {
-        return this.bookRepository.findSome(perPage, page, categories);
+    public async getBooks(perPage: number, page: number, categories: string[]) {
+        return this.bookRepository.getBooks(perPage, page, categories);
     }
 
     public async createBook(data: any) {
@@ -24,9 +20,5 @@ export class BooksService {
 
     public async deleteBook(id: number) {
         return this.bookRepository.deleteBook(id);
-    }
-
-    public async getBookById(id: number) {
-        return this.bookRepository.findById(id);
     }
 }

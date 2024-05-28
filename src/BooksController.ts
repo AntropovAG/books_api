@@ -8,21 +8,12 @@ import { Controller } from './Controllers';
 export class BooksController {
     constructor(@inject(TYPES.BookService) private bookService: BooksService) {}
 
-    public async getAllBooks(req: Request, res: Response) {
-        try {
-            const books = await this.bookService.getBooks();
-            res.json(books);
-        } catch (error) {
-            res.status(500).json({ error: 'Internal Server Error' });
-        }
-    }
-
-    public async getBooksByCategory(req: Request, res: Response) {
+    public async getBooks(req: Request, res: Response) {
         try {
             const perPage = parseInt(req.query.perPage as string) || 10;
             const page = parseInt(req.query.page as string) || 1;
             const categories = req.query.categories ? (req.query.categories as string).split(',') : [];
-            const books = await this.bookService.getBooksByCategory(perPage, page, categories);
+            const books = await this.bookService.getBooks(perPage, page, categories);
             res.json(books);
         } catch (error) {
             res.status(500).json({ error: 'Internal Server Error' });
@@ -58,17 +49,4 @@ export class BooksController {
         }
     }
 
-    public async getBookById(req: Request, res: Response) {
-        try {
-            const bookId = parseInt(req.params.id);
-            const book = await this.bookService.getBookById(bookId);
-            if (!book) {
-                res.status(404).json({ error: 'Book not found' });
-            } else {
-                res.json(book);
-            }
-        } catch (error) {
-            res.status(500).json({ error: 'Internal Server Error' });
-        }
-    }
 }

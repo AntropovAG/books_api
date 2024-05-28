@@ -1,0 +1,77 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       Int      @id @default(autoincrement())
+  name     String   @db.VarChar(255)
+  email    String
+  username String   @unique
+  password String
+  dob      String
+  Rating   Rating[]
+}
+
+model Currency {
+  id      Int    @id @default(autoincrement())
+  name    String
+  acronym String
+  Book    Book[]
+}
+
+model BookAuthors {
+  bookId   Int
+  authorId Int
+  author   Author @relation(fields: [authorId], references: [id])
+  book     Book   @relation(fields: [bookId], references: [id])
+
+  @@id([bookId, authorId])
+}
+
+model Author {
+  id          Int           @id @default(autoincrement())
+  name        String        @unique
+  BookAuthors BookAuthors[]
+}
+
+model Book {
+  id            Int            @id @unique @default(autoincrement())
+  name          String
+  price         Int
+  currencyId    Int
+  year          Int?
+  averageRating Int?           @default(0)
+  currency      Currency       @relation(fields: [currencyId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  BookAuthors   BookAuthors[]
+  BookCategory  BookCategory[]
+  Rating        Rating[]
+}
+
+model Category {
+  id           Int            @id @default(autoincrement())
+  name         String
+  BookCategory BookCategory[]
+}
+
+model BookCategory {
+  bookId     Int
+  categoryId Int
+  book       Book     @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  category   Category @relation(fields: [categoryId], references: [id])
+
+  @@id([bookId, categoryId])
+}
+
+model Rating {
+  id     Int  @id @default(autoincrement())
+  value  Int
+  bookId Int
+  userId Int
+  Book   Book @relation(fields: [bookId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  User   User @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}

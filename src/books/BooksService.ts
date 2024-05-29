@@ -1,6 +1,17 @@
 import { inject, injectable } from 'inversify';
-import { TYPES } from './TYPES';
+import { TYPES } from '../TYPES';
 import { BookRepository } from './BooksRepository';
+
+interface Book {
+    id: number;
+    name: string;
+    price: number;
+    year: number;
+    currency: number;
+    rating: number;
+    authors: string[];
+    categories: string[];
+}
 
 @injectable()
 export class BooksService {
@@ -10,7 +21,7 @@ export class BooksService {
         return this.bookRepository.getBooks(perPage, page, categories);
     }
 
-    public async createBook(data: any) {
+    public async createBook(data: Book) {
         return this.bookRepository.createBook(data);
     }
 

@@ -3,14 +3,15 @@ import { App } from './src/App';
 import * as dotenv from 'dotenv';
 import { Container } from 'inversify';
 import { TYPES } from './src/TYPES';
-import { BooksController } from './src/BooksController';
+import { BooksController } from './src/books/BooksController';
 import { DBService } from './src/DBService';
-import { BooksService } from './src/BooksService';
-import { BookRepository } from './src/BooksRepository';
-import { BooksRouter } from './src/BooksRouter';
-import { AuthController } from './src/AuthController';
-import { AuthService } from './src/AuthService';
-import { UsersRepository } from './src/UsersRepository';
+import { BooksService } from './src/books/BooksService';
+import { BookRepository } from './src/books/BooksRepository';
+import { BooksRouter } from './src/books/BooksRouter';
+import { CategoriesController } from './src/categories/CategoriesController';
+import { CategoriesRouter } from './src/categories/CategoriesRouter';
+import { CategoriesService } from './src/categories/CategoriesService';
+import { CategoriesRepository } from './src/categories/CategoriesRepository';
 
 
 dotenv.config();
@@ -22,6 +23,10 @@ async function bootstrap() {
     iocContainer.bind<DBService>(TYPES.DBService).to(DBService);
     iocContainer.bind<BookRepository>(TYPES.BookRepository).to(BookRepository);
     iocContainer.bind<BooksRouter>(TYPES.BooksRouter).to(BooksRouter);
+    iocContainer.bind<CategoriesController>(TYPES.CategoriesController).to(CategoriesController);
+    iocContainer.bind<CategoriesRouter>(TYPES.CategoriesRouter).to(CategoriesRouter);
+    iocContainer.bind<CategoriesService>(TYPES.CategoriesService).to(CategoriesService);
+    iocContainer.bind<CategoriesRepository>(TYPES.CategoriesRepository).to(CategoriesRepository);
     // iocContainer.bind<AuthController>(TYPES.AuthController).to(AuthController);
     // iocContainer.bind<AuthService>(TYPES.AuthService).to(AuthService);
     // iocContainer.bind<UsersRepository>(TYPES.UsersRepository).to(UsersRepository);

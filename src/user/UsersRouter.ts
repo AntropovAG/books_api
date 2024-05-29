@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { User } from './interfaces/User.interface';
 import { inject, injectable } from 'inversify';
 import { TYPES } from './TYPES';
-import { AuthController } from './AuthController';
+import { AuthController } from './UserController';
 
 export class UsersRouter {
     private _router: Router;

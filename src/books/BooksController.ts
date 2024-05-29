@@ -1,8 +1,8 @@
 import { inject, injectable } from 'inversify';
-import { TYPES } from './TYPES';
+import { TYPES } from '../TYPES';
 import { BooksService } from './BooksService';
 import { Request, Response } from 'express';
-import { Controller } from './Controllers';
+import { Controller } from '../Controllers';
 
 @injectable()
 export class BooksController {
@@ -21,6 +21,10 @@ export class BooksController {
     }
 
     public async createBook(req: Request, res: Response) {
+        const {name, price, year, currency, authors, categories} = req.body;
+        if (!name || !price || !year || !currency || !authors || !categories) {
+            return res.status(400).json({ error: 'Not all data provided. Data expected: name, price, year, currency, authors, categories' });
+        }
         try {
             const book = await this.bookService.createBook(req.body);
             res.json(book);

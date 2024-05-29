@@ -1,14 +1,19 @@
-import { AuthService } from "./AuthService";
-
 export const TYPES = {
     App: Symbol.for("App"),
+
+    DBService: Symbol.for("DBService"),
+    
     BookController: Symbol.for("BookController"),
     BookService: Symbol.for("BookService"),
-    DBService: Symbol.for("DBService"),
     BookRepository: Symbol.for("BookRepository"),
     BooksRouter: Symbol.for("BooksRouter"),
-    UsersRouter: Symbol.for("UsersRouter"),
+
+    CategoriesRepository: Symbol.for("CategoriesRepository"),
+    CategoriesService: Symbol.for("CategoriesService"),
+    CategoriesController: Symbol.for("CategoriesController"),
     CategoriesRouter: Symbol.for("CategoriesRouter"),
+
+    UsersRouter: Symbol.for("UsersRouter"),
     AuthController: Symbol.for("AuthController"),
     AuthService: Symbol.for("AuthService"),
     UsersRepository: Symbol.for("UsersRepository"),

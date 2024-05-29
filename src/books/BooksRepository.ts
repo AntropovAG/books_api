@@ -1,17 +1,8 @@
-import { DBService } from "./DBService";
-import { id, inject, injectable } from "inversify";
-import { TYPES } from "./TYPES";
+import { DBService } from "../DBService";
+import { inject, injectable } from "inversify";
+import { TYPES } from "../TYPES";
+import { Book } from "../interfaces/Book.interface"
 
-interface Book {
-    id: number;
-    name: string;
-    price: number;
-    year: number;
-    currency: number;
-    rating: number;
-    authors: string[];
-    categories: string[];
-}
 
 @injectable()
 export class BookRepository {
@@ -49,7 +40,8 @@ export class BookRepository {
                     include: {
                         author: true,
                     }
-                }
+                },
+                currency: true
             },
         });
 
@@ -69,7 +61,7 @@ export class BookRepository {
         return booksWithAddedInfo;
     }
 
-    public async createBook(data: any) {
+    public async createBook(data: Book) {
         const { categories, authors, ...bookData } = data;
 
         const categoryIds = await this.dbService.client.category.findMany({
@@ -152,7 +144,7 @@ export class BookRepository {
 
         const currentAuthorIds = currentAuthors.map(a => a.authorId);
 
-        const authorRecords = await Promise.all(authors.map(async (authorName: string) => {
+        const authorRecords = authors? await Promise.all(authors.map(async (authorName: string) => {
             let authorRecord = await this.dbService.client.author.findUnique({
                 where: { name: authorName }
             });
@@ -164,7 +156,7 @@ export class BookRepository {
             }
 
             return authorRecord;
-        }));
+        })) : [];
 
         const newAuthorRecords = authorRecords.filter(author => !currentAuthorIds.includes(author.id));
 

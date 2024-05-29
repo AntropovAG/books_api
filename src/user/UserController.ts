@@ -1,7 +1,7 @@
 import { Controller } from './Controllers';
 import { ValidateMiddleware } from './ValidateMiddlware';
 import { Request, Response, NextFunction } from 'express';
-import { AuthService } from './AuthService';
+import { AuthService } from './UserService';
 import { injectable, inject } from 'inversify';
 import { TYPES } from './TYPES';
 import { Router } from 'express';

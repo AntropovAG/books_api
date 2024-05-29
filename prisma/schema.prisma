@@ -8,13 +8,14 @@ datasource db {
 }
 
 model User {
-  id       Int      @id @default(autoincrement())
-  name     String   @db.VarChar(255)
-  email    String
-  username String   @unique
-  password String
-  dob      String
-  Rating   Rating[]
+  id        Int         @id @unique @default(autoincrement())
+  name      String?
+  email     String      @unique
+  username  String      @unique
+  password  String
+  dob       String?
+  Rating    Rating[]
+  UserBooks UserBooks[]
 }
 
 model Currency {
@@ -50,6 +51,7 @@ model Book {
   BookAuthors   BookAuthors[]
   BookCategory  BookCategory[]
   Rating        Rating[]
+  UserBooks     UserBooks[]
 }
 
 model Category {
@@ -62,7 +64,7 @@ model BookCategory {
   bookId     Int
   categoryId Int
   book       Book     @relation(fields: [bookId], references: [id], onDelete: Cascade)
-  category   Category @relation(fields: [categoryId], references: [id])
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
 
   @@id([bookId, categoryId])
 }
@@ -72,6 +74,15 @@ model Rating {
   value  Int
   bookId Int
   userId Int
-  Book   Book @relation(fields: [bookId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  User   User @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  Book   Book @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  User   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model UserBooks {
+  id     BigInt @id @default(autoincrement())
+  userId Int
+  bookId Int
+  Book   Book   @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  User   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

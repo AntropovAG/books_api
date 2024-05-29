@@ -12,6 +12,10 @@ import { CategoriesController } from './src/categories/CategoriesController';
 import { CategoriesRouter } from './src/categories/CategoriesRouter';
 import { CategoriesService } from './src/categories/CategoriesService';
 import { CategoriesRepository } from './src/categories/CategoriesRepository';
+import { UsersRepository } from './src/users/UsersRepository';
+import { UsersController } from './src/users/UsersController';
+import { UsersService } from './src/users/UsersService';
+import { UsersRouter } from './src/users/UsersRouter';
 
 
 dotenv.config();
@@ -27,9 +31,11 @@ async function bootstrap() {
     iocContainer.bind<CategoriesRouter>(TYPES.CategoriesRouter).to(CategoriesRouter);
     iocContainer.bind<CategoriesService>(TYPES.CategoriesService).to(CategoriesService);
     iocContainer.bind<CategoriesRepository>(TYPES.CategoriesRepository).to(CategoriesRepository);
-    // iocContainer.bind<AuthController>(TYPES.AuthController).to(AuthController);
-    // iocContainer.bind<AuthService>(TYPES.AuthService).to(AuthService);
-    // iocContainer.bind<UsersRepository>(TYPES.UsersRepository).to(UsersRepository);
+    iocContainer.bind<UsersRepository>(TYPES.UsersRepository).to(UsersRepository);
+    iocContainer.bind<UsersController>(TYPES.UsersController).to(UsersController);
+    iocContainer.bind<UsersService>(TYPES.UsersService).to(UsersService);
+    iocContainer.bind<UsersRouter>(TYPES.UsersRouter).to(UsersRouter);
+
     iocContainer.bind<App>(TYPES.App).to(App);
     const app = iocContainer.get<App>(TYPES.App);
 

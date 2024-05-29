@@ -14,7 +14,7 @@ export const TYPES = {
     CategoriesRouter: Symbol.for("CategoriesRouter"),
 
     UsersRouter: Symbol.for("UsersRouter"),
-    AuthController: Symbol.for("AuthController"),
-    AuthService: Symbol.for("AuthService"),
+    UsersController: Symbol.for("UsersController"),
+    UsersService: Symbol.for("UsersService"),
     UsersRepository: Symbol.for("UsersRepository"),
 }  
